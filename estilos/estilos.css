@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#tablero {
+    border-collapse: separate;
+    border: 5px solid black;
+    margin: 0 auto;
+    background-color: blue;
+		border-top: 2px solid black;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    background-color: white;
+}
+
+#scoreJug1, #scoreJug2 {
+    font-size: 30px;
+}
