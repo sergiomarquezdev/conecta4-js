@@ -183,33 +183,36 @@
 	
 	// FUNCIÓN 2. Oculta formulario y muestra marcador y tablero.
 	function comprobarFormJugs(){
-		
+	
 		jug1 = document.getElementById("nombreJug1").value.toUpperCase();
 		jug2 = document.getElementById("nombreJug2").value.toUpperCase(); // OBTENEMOS VALORES DE LOS NOMBRES DE JUGADORES
 
-		
-		document.getElementById("jugador1h3").innerHTML = jug1;
-		document.getElementById("jugador2h3").innerHTML = jug2; // Cambiamos los nombres de los jugadores en el marcador.
+		if (jug1 != "" && jug2 != ""){
+			document.getElementById("jugador1h3").innerHTML = jug1;
+			document.getElementById("jugador2h3").innerHTML = jug2; // Cambiamos los nombres de los jugadores en el marcador.
 
-		
-		document.getElementById("formNombresJug").style.display = "none"; // Ocultamos formulario nombres.
+			
+			document.getElementById("formNombresJug").style.display = "none"; // Ocultamos formulario nombres.
 
-		
-		document.getElementById("divPrincipal").style.display = "inherit"; // Mostramos marcador y tablero.
+			
+			document.getElementById("divPrincipal").style.display = "inherit"; // Mostramos marcador y tablero.
 
-		
-		let numRandom = parseInt(Math.random()*10);
-		let turno;
-		if (numRandom % 2 == 0){
-			turno = jug1;
+			
+			let numRandom = parseInt(Math.random()*10);
+			let turno;
+			if (numRandom % 2 == 0){
+				turno = jug1;
+			} else {
+				turno = jug2;
+			} // Jug1 o Jug2 aleatorio.
+
+			
+			document.getElementById("turnoJug").innerHTML = turno; // Escribimos el turno.
+			
+			tablero = new Tablero(turno);
 		} else {
-			turno = jug2;
-		} // Jug1 o Jug2 aleatorio.
-
-		
-		document.getElementById("turnoJug").innerHTML = turno; // Escribimos el turno.
-		
-		tablero = new Tablero(turno);
+			alert("ERROR. Debe indicar un nombre por cada jugador.");
+		}
 	}	
 		
 	function celdaPulsada(){
