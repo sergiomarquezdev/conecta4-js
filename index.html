@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="librerias/bootstrap/css/bootstrap.min.css"/>
 <!-- Estilos CSS -->
 <link href="estilos/estilos.css" rel="stylesheet" type="text/css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- JavaScript -->
 <script src="librerias/jquery/jquery-3.4.1.min.js"></script>
 <script src="librerias/bootstrap/js/bootstrap.min.js">
@@ -31,7 +32,7 @@
     <input type="text" class="p-1"  id="nombreJug2" name="nombreJug2"/>
   </label>
   <br/>
-  <button type="button" class="btn btn-outline-dark m-2 p-2" onclick="comprobarFormJugs();" style="width: 150px;">JUGAR!!!</button>
+  <button type="button" class="btn btn-outline-dark m-2 p-2" onclick="comprobarFormJugs();">JUGAR!!!</button>
 </div>
 
 <!-- DIV CON MARCADOR Y TABLERO -->
@@ -39,7 +40,7 @@
   <!-- INSTRUCCIONES CONECTA 4 -->
   <div class="col-12 mt-1">
     <div class="alert alert-primary text-dark fade show">
-      <h5 class="alert-heading text-center" style="text-decoration: underline;">INSTRUCCIONES CONECTA 4
+      <h5 class="alert-heading text-center">INSTRUCCIONES CONECTA 4
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -61,7 +62,7 @@
                 <div class="container-fluid">
                   <div class="row justify-content-center">
                     <div class="col-12">
-                      <h3 id="jugador1h3" class="text-center text-danger">JUGADOR 1</h3>
+                      <h3 id="jugador1h3" class="text-center player1-name-text">JUGADOR 1</h3>
                     </div>
                     <div class="col-6">
                       <div class="alert bg-danger text-center text-white">
@@ -75,7 +76,7 @@
                 <div class="container-fluid">
                   <div class="row justify-content-center">
                     <div class="col-12">
-                      <h3 id="jugador2h3" class="text-center text-warning">JUGADOR 2</h3>
+                      <h3 id="jugador2h3" class="text-center player2-name-text">JUGADOR 2</h3>
                     </div>
                     <div class="col-6">
                       <div class="alert bg-warning text-center text-white">
@@ -158,308 +159,12 @@
       
       <!-- TURNO JUGADOR -->
       <div class="col-12 text-center mt-1">
-        <p style="font-size: 18px;">Turno: <span id="turnoJug" class="font-weight-bold"></span>
+        <p id="turnoParrafo">Turno: <span id="turnoJug" class="font-weight-bold"></span>
         </p>
       </div>
     </div>
   </div>
 </div>
-<script>
-	let tablero;
-	
-	let elementosTd = document.getElementsByTagName("td");
-	for (let i = 0; i<elementosTd.length; i++){
-		elementosTd[i].onclick = celdaPulsada;
-	}
-
-	// FUNCIÓN 1. Oculta botón comenzar y muestra formulario.
-	function formJugs(){ 
-		
-		document.getElementById("comenzarButton").style.display = "none"; // Ocultamos botón comenzar
-		
-		
-		document.getElementById("formNombresJug").style.display = "inherit"; // Mostramos formulario nombres
-}
-	
-	// FUNCIÓN 2. Oculta formulario y muestra marcador y tablero.
-	function comprobarFormJugs(){
-	
-		jug1 = document.getElementById("nombreJug1").value.toUpperCase();
-		jug2 = document.getElementById("nombreJug2").value.toUpperCase(); // OBTENEMOS VALORES DE LOS NOMBRES DE JUGADORES
-
-		if (jug1 != "" && jug2 != ""){
-			document.getElementById("jugador1h3").innerHTML = jug1;
-			document.getElementById("jugador2h3").innerHTML = jug2; // Cambiamos los nombres de los jugadores en el marcador.
-
-			
-			document.getElementById("formNombresJug").style.display = "none"; // Ocultamos formulario nombres.
-
-			
-			document.getElementById("divPrincipal").style.display = "inherit"; // Mostramos marcador y tablero.
-
-			
-			let numRandom = parseInt(Math.random()*10);
-			let turno;
-			if (numRandom % 2 == 0){
-				turno = jug1;
-			} else {
-				turno = jug2;
-			} // Jug1 o Jug2 aleatorio.
-
-			
-			document.getElementById("turnoJug").innerHTML = turno; // Escribimos el turno.
-			
-			tablero = new Tablero(turno);
-		} else {
-			alert("ERROR. Debe indicar un nombre por cada jugador.");
-		}
-	}	
-		
-	function celdaPulsada(){
-		let celda = this.id;
-		let columna = celda.charAt(1);
-		tablero.comprobarColumna(columna);
-	} // Coger id de la celda pulsada y sacar la columna.
-	
-
-	// FUNCIÓN 3. CLASE TABLERO.
-	function Tablero(jugador){
-		this.fila1 = new Array("","","","","","","");
-		this.fila2 = new Array("","","","","","","");
-		this.fila3 = new Array("","","","","","","");
-		this.fila4 = new Array("","","","","","","");
-		this.fila5 = new Array("","","","","","","");
-		this.fila6 = new Array("","","","","","","");
-		this.arrayBidimensional = new Array (this.fila1, this.fila2, this.fila3, this.fila4, this.fila5, this.fila6);
-		this.jugador = jugador;
-		this.j1;
-		this.j2;
-		
-
-		// FUNCIÓN 4. Comprobar la columna para ver si está llena.
-		this.comprobarColumna = function(columnaPulsada){
-			this.j1 = document.getElementById("jugador1h3").innerHTML;
-			this.j2 = document.getElementById("jugador2h3").innerHTML;
-			if (this.arrayBidimensional[0][columnaPulsada] == ""){
-				this.actualizarMatriz(columnaPulsada);
-			} else {
-				alert ("Columna llena. Prueba con otra columna.");
-			}
-		}
-
-		// FUNCIÓN 5. Actualizar la matriz.
-		this.actualizarMatriz = function(columnaPulsada){
-			let actualizada = false;
-			let total = this.arrayBidimensional.length-1;
-			for (let i = total; i>=0; i--){
-				if (actualizada == false){
-					if (this.arrayBidimensional[i][columnaPulsada] == ""){
-						if (this.jugador == jug1){
-							this.arrayBidimensional[i][columnaPulsada] = "red";	
-						} else {
-							this.arrayBidimensional[i][columnaPulsada] = "yellow";	
-						}
-					actualizada = true;
-					}
-				}
-			}
-			
-			this.colorearTablero();
-		}
-		
-		// FUNCIÓN 6. Colorear el tablero según la matriz.
-		this.colorearTablero = function (){
-			for (let i = 0; i<6; i++){
-				for (let j = 0 ; j<7; j++){
-					if (this.arrayBidimensional[i][j] != ""){
-						let id = i+""+j;
-						document.getElementById(id).style.backgroundColor = this.arrayBidimensional[i][j];
-					}
-				}
-			}
-			this.comprobarTablero();
-		}
-		
-		// FUNCIÓN 7. Comprobar si se ha ganado o si está lleno.
-		this.comprobarTablero = function(){
-			let fin = false;
-			let ganador;
-			let contador = 1;
-			
-			// COMPROBAR VERTICAL
-			for (let i = 0; i < 6; i++){
-				for (let j = 0; j < 7; j++){
-					if (i>0 && i<4){
-						// COMPROBAR COLOR JUG1 (red)
-						if ( this.arrayBidimensional[i-1][j] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i+1][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i+2][j] && this.arrayBidimensional[i][j] == "red"){
-							fin = true;
-						}
-						
-						// COMPROBAR COLOR JUG2 (yellow)
-						if ( this.arrayBidimensional[i-1][j] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i+1][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i+2][j] && this.arrayBidimensional[i][j] == "yellow"){
-							fin = true;
-						}
-					}
-				}
-			}
-			
-			// COMPROBAR HORIZONTAL
-			for (let i = 0; i < 6; i++){
-				for (let j = 0; j < 7; j++){
-					if (j>0){
-						// COMPROBAR COLOR JUG1 (red)
-						if ( this.arrayBidimensional[i][j-1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i][j+1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i][j+2] && this.arrayBidimensional[i][j] == "red"){
-							fin = true;
-						}
-						
-						// COMPROBAR COLOR JUG2 (yellow)
-						if ( this.arrayBidimensional[i][j-1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i][j+1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i][j+2] && this.arrayBidimensional[i][j] == "yellow"){
-							fin = true;
-						} 
-					}
-				}
-			}
-			
-			// COMPROBAR DIAGONAL
-			for (let i = 5; i >=0 ; i--){
-				for (let j = 0; j < 7; j++){
-					if (i<5 && j>0 && i>1){
-						// COMPROBAR COLOR JUG1 (red)
-						if ( this.arrayBidimensional[i+1][j-1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-1][j+1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-2][j+2] && this.arrayBidimensional[i][j] == "red"){
-							fin = true;
-						}
-						
-						// COMPROBAR COLOR JUG2 (yellow)
-						if ( this.arrayBidimensional[i+1][j-1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-1][j+1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-2][j+2] && this.arrayBidimensional[i][j] == "yellow"){
-							fin = true;
-						}
-					}
-				}
-			}
-			
-			// COMPROBAR DIAGONAL INVERSA
-			for (let i = 5; i >=0 ; i--){
-				for (let j = 6; j >= 0; j--){
-					if (i<5 && j<6 && i>1 && j>1){
-						// COMPROBAR COLOR JUG1 (red)
-						if ( this.arrayBidimensional[i+1][j+1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-1][j-1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-2][j-2] && this.arrayBidimensional[i][j] == "red"){
-							fin = true;
-						}
-						
-						// COMPROBAR COLOR JUG2 (yellow)
-						if ( this.arrayBidimensional[i+1][j+1] == this.arrayBidimensional[i][j] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-1][j-1] && this.arrayBidimensional[i][j] == this.arrayBidimensional[i-2][j-2] && this.arrayBidimensional[i][j] == "yellow"){
-							fin = true;
-						}
-					}
-				}
-			}
-			
-			// COMPROBAR SI ESTÁ LLENO
-			let total = 7*6;
-			contador = 0;
-			for (let i = 0; i<6; i++){
-				for (let j = 0; j<7; j++){
-					if (this.arrayBidimensional[i][j] != ""){
-						contador++;
-					}
-				}
-			}
-			
-			if (contador==total){
-				fin = true;
-				this.jugador = "empate";
-			}
-			
-			// Si no ha terminado el juego.
-			if (fin == false){
-				this.siguienteTurno();
-			} else {
-				this.actualizarMarcador(this.jugador);
-			}
-			
-		}
-		
-		// FUNCIÓN 8. Actualizar turno si no ha terminado el juego.
-		this.siguienteTurno = function(){
-			if (this.jugador == this.j1){
-				this.jugador = this.j2;
-			} else {
-				this.jugador = this.j1;
-			}
-			document.getElementById("turnoJug").innerHTML = this.jugador;
-		}
-
-		// FUNCIÓN 9. Actualizar el marcador subiendo un punto al ganador.
-		this.actualizarMarcador = function (ganador){
-			let jug1 = document.getElementById("jugador1h3");
-			let jug2 = document.getElementById("jugador2h3");
-			if (ganador == this.j1){
-				alert("Enhorabuena "+this.j1+", has ganado!!");
-				let resultado = document.getElementById("scoreJug1").innerHTML;
-				let newResultado = parseInt(resultado)+1;
-				document.getElementById("scoreJug1").innerHTML = newResultado;
-			} else if (ganador == this.j2){
-				alert("Enhorabuena "+this.j2+", has ganado!!");
-				let resultado = document.getElementById("scoreJug2").innerHTML;
-				let newResultado = parseInt(resultado)+1;
-				document.getElementById("scoreJug2").innerHTML = newResultado;
-			} else {
-				alert ("EMPATE!!!");
-			}
-
-			this.nuevoJuego();
-		
-		}
-	
-	// FUNCIÓN . Preguntar si vaciar el tablero para comenzar un nuevo juego.
-		let rechazoReiniciar = false;
-		this.nuevoJuego = function(){
-			
-			// Preguntar quiere reiniciar el tablero y jugar.
-			if (confirm("¿Quiere volver a jugar?")){
-
-				// COMPROBAR PRÓXIMO TURNO. Si el último fue JUG1, empieza JUG2 y viceversa.
-				if (this.jugador == this.j1){
-					this.jugador = this.j2;
-				} else {
-					this.jugador = this.j1;
-				}
-
-				// Ponemos el color de fondo de las celdas en blanco.
-				let celdas = document.getElementsByTagName("td");
-				for (let i = 0; i < celdas.length; i++){
-					celdas[i].style.backgroundColor = "white";
-				}
-				
-				this.arrayBidimensional = "vacio";
-				
-				tablero = new Tablero(this.jugador);
-				rechazoReiniciar = false;
-				
-				
-			// Si NO quiere reiniciar el tablero.
-			} else {
-				alert ("GRACIAS POR JUGAR!!!");
-				rechazoReiniciar = true;
-			}	
-			
-			// Si NO se ha reiniciado el tablero.
-			if (rechazoReiniciar == true){
-				for (let i = 0; i<elementosTd.length; i++){
-						elementosTd[i].onclick = tablero.nuevoJuego;
-					}
-			// Si se quiere reiniciar el tablero.
-			} else {
-				for (let i = 0; i<elementosTd.length; i++){
-					elementosTd[i].onclick = celdaPulsada;
-				}
-			}
-			
-		}
-		
-		
-	}
-
-</script>
+<script src="js/conecta4.js"></script>
 </body>
 </html>
