@@ -106,13 +106,16 @@ const NUM_ROWS = 6;
 				const cellId = i + "" + j;
 				const cellElement = document.getElementById(cellId);
 				if (cellElement) {
-					let color = "white"; // Default for EMPTY_CELL
-					if (boardState[i][j] === PLAYER1_COLOR) {
-						color = PLAYER1_COLOR;
-					} else if (boardState[i][j] === PLAYER2_COLOR) {
-						color = PLAYER2_COLOR;
+					// Reset classes first
+					cellElement.classList.remove('empty-slot', 'player1-token', 'player2-token');
+
+					if (boardState[i][j] === PLAYER1_COLOR) { // State value 'red'
+						cellElement.classList.add('player1-token');
+					} else if (boardState[i][j] === PLAYER2_COLOR) { // State value 'yellow'
+						cellElement.classList.add('player2-token');
+					} else { // EMPTY_CELL (state value '')
+						cellElement.classList.add('empty-slot');
 					}
-					cellElement.style.backgroundColor = color;
 				}
 			}
 		}

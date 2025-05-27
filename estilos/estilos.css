@@ -2,42 +2,143 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Styles for the Connect 4 game board table */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern font stack */
+    background-color: #f0f0f0;
+    color: #333; /* Default text color */
+    padding-top: 20px;
+    line-height: 1.6; /* Improved readability */
+}
+
+/* Buttons Styling */
+.btn { /* General Bootstrap button class, target more specifically if needed */
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+#comenzarButton { /* Specific ID for the main start button */
+    display: block; /* Make it a block to center it with margin auto */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+/* Player Name Input Form */
+#formNombresJug {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 400px; /* Limit width */
+    margin: 20px auto; /* Center it */
+}
+#formNombresJug p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #333;
+}
+#formNombresJug label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+#formNombresJug input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+#formNombresJug button { /* "JUGAR!!!" button inside the form */
+    width: 100%; /* Make button full width of form */
+    /* padding: 10px 15px; Inherited from .btn if #formNombresJug button also has .btn */
+}
+
+
+/* Styles for the Connect 4 game board table - KEEP EXISTING STYLES */
 #tablero {
-    border-collapse: separate; /* Ensure borders are distinct */
-    border: 5px solid black; /* Main border around the table */
-    margin: 0 auto; /* Center the table on the page */
-    background-color: blue; /* Background color of the board itself (grid area) */
-	border-top: 2px solid black; /* Additional top border, check if this is desired or redundant with the 5px border */
+    border-collapse: separate;
+    border: 8px solid #2c3e50;
+    margin: 20px auto;
+    background-color: #3498db;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
-/* Styles for individual cells (slots) in the game board */
 td {
-    width: 60px; /* Width of each cell */
-    height: 60px; /* Height of each cell */
-    border-radius: 50px; /* Make cells circular (for the tokens) */
-    background-color: white; /* Default background color for an empty slot */
+    width: 60px;
+    height: 60px;
+    padding: 4px;
+    background-color: transparent;
 }
 
-/* Styles for player score display */
+.empty-slot, .player1-token, .player2-token {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.empty-slot {
+    background-color: #bdc3c7;
+    background-image: radial-gradient(circle at center, #ebebeb 40%, #bdc3c7 100%);
+}
+
+.player1-token {
+    background-color: #e74c3c;
+    background-image: radial-gradient(circle at 50% 40%, #ff7666, #c0392b 85%);
+    box-shadow: inset 0 -3px 4px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.player2-token {
+    background-color: #f1c40f;
+    background-image: radial-gradient(circle at 50% 40%, #f9e79f, #f39c12 85%);
+    box-shadow: inset 0 -3px 4px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* Scoreboard and Player Name Customization */
+/* Container for player names and scores */
+.alert.alert-secondary { /* Scoreboard main container */
+    background-color: #e9ecef; /* Lighter grey, or #fff for white */
+    border-color: #ced4da; /* Softer border */
+}
+/* Player name headers - using specific classes for colors */
+.player1-name-text { /* Custom class for Player 1's name */
+    color: #c0392b; /* Darker red, from token shadow */
+}
+.player2-name-text { /* Custom class for Player 2's name */
+    color: #f39c12; /* Darker yellow, from token shadow */
+}
+#jugador1h3, #jugador2h3 { /* Keep Bootstrap alignment but use custom color classes */
+    font-weight: bold;
+}
+
+/* Score display */
 #scoreJug1, #scoreJug2 {
-    font-size: 30px; /* Font size for the score numbers */
+    font-size: 30px;
+    color: #333;
 }
 
-/* Styles moved from inline HTML */
-/* Style for the 'JUGAR!!!' button in the player name form */
-#formNombresJug button {
-    width: 150px; /* Specific width for the button */
+/* Instructions Alert */
+.alert.alert-primary { /* Instructions container */
+    background-color: #cfe2ff; /* Softer blue */
+    border-color: #b6d4fe;
+}
+.alert-primary .alert-heading { 
+    text-decoration: underline;
+    color: #004085; /* Darker blue for heading text */
 }
 
-/* Style for the heading within the primary alert (used for game instructions) */
-.alert-primary .alert-heading {
-    text-decoration: underline; /* Underline the instructions heading */
-}
-
-/* Style for the paragraph displaying whose turn it is */
+/* Turn Paragraph */
 #turnoParrafo {
-    font-size: 18px; /* Font size for the turn indicator text */
+    font-size: 1.2em; /* Slightly larger */
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
 }
