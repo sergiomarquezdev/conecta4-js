@@ -47,5 +47,5 @@ Un clásico juego de Conecta 4 implementado con HTML, CSS y JavaScript puro, uti
 ```
 
 ## Autor
-*   **Sergio Márquez @ smarquezp05** (Creador original del proyecto)
+*   **Sergio Márquez** (Creador original del proyecto)
 *   Mejoras de estructura y estilo realizadas por Jules (Agente IA de Google).
