@@ -1,23 +1,43 @@
+/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
 }
 
+/* Styles for the Connect 4 game board table */
 #tablero {
-    border-collapse: separate;
-    border: 5px solid black;
-    margin: 0 auto;
-    background-color: blue;
-		border-top: 2px solid black;
+    border-collapse: separate; /* Ensure borders are distinct */
+    border: 5px solid black; /* Main border around the table */
+    margin: 0 auto; /* Center the table on the page */
+    background-color: blue; /* Background color of the board itself (grid area) */
+	border-top: 2px solid black; /* Additional top border, check if this is desired or redundant with the 5px border */
 }
 
+/* Styles for individual cells (slots) in the game board */
 td {
-    width: 60px;
-    height: 60px;
-    border-radius: 50px;
-    background-color: white;
+    width: 60px; /* Width of each cell */
+    height: 60px; /* Height of each cell */
+    border-radius: 50px; /* Make cells circular (for the tokens) */
+    background-color: white; /* Default background color for an empty slot */
 }
 
+/* Styles for player score display */
 #scoreJug1, #scoreJug2 {
-    font-size: 30px;
+    font-size: 30px; /* Font size for the score numbers */
+}
+
+/* Styles moved from inline HTML */
+/* Style for the 'JUGAR!!!' button in the player name form */
+#formNombresJug button {
+    width: 150px; /* Specific width for the button */
+}
+
+/* Style for the heading within the primary alert (used for game instructions) */
+.alert-primary .alert-heading {
+    text-decoration: underline; /* Underline the instructions heading */
+}
+
+/* Style for the paragraph displaying whose turn it is */
+#turnoParrafo {
+    font-size: 18px; /* Font size for the turn indicator text */
 }
